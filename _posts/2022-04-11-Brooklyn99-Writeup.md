@@ -6,15 +6,16 @@ tags: [Misconfigured FTP, Steganography, Bruteforce]
 ---
  
 # Brooklyn Nine Nine walkthrough.
-This room is aimed for beginner level hackers but anyone can try to hack this box. There are two main intended ways to root the box. you can check it out here: [Tryhackme](https://www.tryhackme.com/room/brooklynninenine)
+This room is aimed for beginner level hackers but anyone can try to hack this box. There are two main intended ways to root the box, you can check it out here: [Tryhackme](https://www.tryhackme.com/room/brooklynninenine)
           
           
-# ~$ Preface::
-First off I am personally a huge fan of the show, (Amy is my fav character btw I'm sure yunno why lol) and Its a quite easy one, but no worries if youre stuck I'll walk you through buddy;) but first I'll leave hints to stimulate your mind:
+# ~$ Preface
+First off I am personally a huge fan of the show, (Amy is my fav character btw I'm sure yunno why lol) and It's a quite easy one, but no worries if you're stuck I'll walk you through buddy;) but first I'll leave hints to stimulate your mind:
+
 ![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/brooklyn99.jpg)
 
 
-# ~$ Hints::
+# ~$ Hints
 - checked source code yet??
 - Port 80 exists for a reason yunno?
 - Hmph, just a picture? 
@@ -58,7 +59,7 @@ Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 Perfect, port 21, 22 and 80, ftp, ssh and http all present, lets get to it then...
 
-# ~$ First Intended method::
+# ~$ First method::
 Got anon logins allowed on ftp, so, swiftly I log in to "get" the file we see from our script scan: "note_to_jake.txt" where Amy gives us a clear hint(See why I like her?)::
 
 ```
@@ -105,9 +106,9 @@ And append
 ```
 !/bin/sh
 ```
-And thats it we are root! read the file, submit the flags.
+And that's it we are root! read the file, submit the flags.
 
-Why this was fun is because it made me understand the relevance of the /etc/profile config file, it is basically a root owned folder that is ran on login of any user as a child process of systemd(like all processes are) that controls system-wide default variables especially terminal type in our case scenerio, us having priviledged access to the "less" command utility which provides a "vim or a vim-like interface" to read files and edit binaries, leveraging that allowed us carry out command operations within the file with the "less" binary allowing us spawn a root shell.
+Why this was fun is because it made me understand the relevance of the /etc/profile config file, it is basically a root owned file that is ran on login of any user as a child process of systemd(like all processes are) that controls system-wide default variables especially terminal type in our case scenerio, us having priviledged access to the "less" command utility which provides a "vim or a vim-like interface" to read files and edit binaries, leveraging that allowed us carry out command operations within the file with the "less" binary allowing us spawn a root shell.
 
 
 
@@ -118,7 +119,7 @@ Won't be posting images to display cause I forgot to document this part lol, but
  Have you ever head of steganography?
  ```
 - Downloaded the image being served on port 80 through the server, Yes the seemingly unsuspecting image.
- Tried a 2 common passwords and failed swiftly and then decided to google-fu a little for tools to bruteforce a steg image and found two: stegcracker and stegseek, although stegseek is more revered due to speed I prefer stegcracker on multithread mode :)
+  Tried a few common passwords and failed swiftly and then decided to google-fu a little for tools to bruteforce a steg image and found two: stegcracker and stegseek, although stegseek is more revered due to it's speed but I prefer stegcracker on multithread mode :)
  
 - Then I used Stegcracker:
 ```
@@ -127,13 +128,15 @@ sudo apt install stegcracker
 ![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/steg-bb9.png)
 
 - cat the output file, from using the pass to extract the stego image and it gives us this::
+
 ``` 
 Holts Password:
 fl#################e
 
 Enjoy!!
 ```
-- It gives us Holts ssh creds, I log in, Holt has a different sudo permission, easy fix, used [gtfobins](https://gtfobins.github.io/) and got root!
+
+- It gives us Holts ssh creds, I log in, Holt has a different sudo permission, easy fix: used [gtfobins](https://gtfobins.github.io/) and got root!
 And thats it!
 
 
