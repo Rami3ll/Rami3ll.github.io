@@ -1,5 +1,5 @@
 ---
-layout: posts
+layout: post
 title: Pickle Rick Writeup
 categories: [TryHackMe]
 tags: [Command Injection, Web shell, Directory Enumeration, Dirsearch]
@@ -67,12 +67,11 @@ Straight up, I visited the site::
 
 Found nothing but a message from rick in dire need of our help to revert back to human... Quickly I view the page source, always view the source! therein I find this commented out:
 ```
-
     Note to self, remember username!
 
-    Username: R1ckRul3s
-    
+    Username: R1ckRul3s   
  ```
+ 
  Okay Classic rick keeping hidden reminders for himself, I try the username on port 22 and bruteforce the creds with hydra and realized it could only be 2 things: apparently Rick's pass isn't in a wordlist OR the acquired username is not for ssh, while hydra was still trying I resort to my go-to dir enum tool, Dirsearch:)
 fire her up and get these hidden directories:
  
@@ -100,7 +99,7 @@ Target: http://10.10.220.220/
 
 Task Completed
                                         
- ```
+```
  Nothing much only interesting directory is a login page and the robots.txt, checked that out to see any pages disallowed to be crawled and Instead see Rick's catch phrase
  
  ```
