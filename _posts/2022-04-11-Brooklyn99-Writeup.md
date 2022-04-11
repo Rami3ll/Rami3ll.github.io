@@ -5,13 +5,14 @@ categories: [TryHackMe]
 tags: [Misconfigured FTP, Steganography, Bruteforce]
 ---
  
-# Brooklyn Nine Nine 
-This room is aimed for beginner level hackers but anyone can try to hack this box. There are two main intended ways to root the box. you can check it out here:
-[Tryhackme](https://www.tryhackme.com/room/brooklynninenine)
-
+# Brooklyn Nine Nine walkthrough.
+This room is aimed for beginner level hackers but anyone can try to hack this box. There are two main intended ways to root the box. you can check it out here: [Tryhackme](https://www.tryhackme.com/room/brooklynninenine)
+          
+          
 # ~$ Preface::
 First off I am personally a huge fan of the show, (Amy is my fav character btw I'm sure yunno why lol) and Its a quite easy one, but no worries if youre stuck I'll walk you through buddy;) but first I'll leave hints to stimulate your mind:
 ![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/brooklyn99.jpg)
+
 
 # ~$ Hints::
 - checked source code yet??
@@ -125,14 +126,14 @@ sudo apt install stegcracker
 ```
 ![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/steg-bb9.png)
 
-- cat the output file, from using the pass to extract the steg image and it gives us this::
+- cat the output file, from using the pass to extract the stego image and it gives us this::
 ``` 
 Holts Password:
 fl#################e
 
 Enjoy!!
 ```
-- It gives us Holts ssh creds, I log in, Holt has a different sudo permission used [gtfobins](https://gtfobins.github.io/) and got root!
+- It gives us Holts ssh creds, I log in, Holt has a different sudo permission, easy fix, used [gtfobins](https://gtfobins.github.io/) and got root!
 And thats it!
 
 
