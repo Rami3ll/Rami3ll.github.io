@@ -5,7 +5,7 @@ categories: [TryHackMe]
 tags: [Command Injection, Web shell, Directory Enumeration, Dirsearch]
 ---
 
-# Pickle Rick
+# Pickle Rick Walkthrough.
 This Rick and Morty themed challenge requires you to exploit a webserver to find 3 ingredients that will help Rick make his potion to transform himself back into a human from a pickle.
 Check it out here: [TryHackMe](https://www.tryhackme.com/room/picklerick)
 
@@ -146,7 +146,7 @@ www-data@ip-10-10-60-92:/home/rick$ cat second\ ingredients
 1 #### tear
 ```
 
-And as compensation and horrible security, the www-data user who we are logged in as has sudo permissions to execute EVERYTHING! sheesh!
+And as compensation and horrible security, the www-data user who we are logged in as has sudo permissions to execute EVERYTHING? sheesh!
 
 ```
 Matching Defaults entries for www-data on ip-10-10-60-92.eu-west-1.compute.internal:
@@ -165,15 +165,3 @@ www-data@ip-10-10-60-92:/home/rick$ sudo su
 root@ip-10-10-60-92: cd /root; cat 3rd.txt
 ```
 And that's it! We saved Rick and got to see jerry tears too --the joy:-)
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
