@@ -12,7 +12,7 @@ This room is aimed for beginner level hackers but anyone can try to hack this bo
 # ~$ Preface
 First off I am personally a huge fan of the show, (Amy is my fav character btw I'm sure yunno why lol) and It's a quite easy one, but no worries if you're stuck I'll walk you through buddy;) but first I'll leave hints to stimulate your mind:
 
-![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/brooklyn99.jpg)
+![image](/assets/img/posts/brooklyn99.jpg)
 
 
 # ~$ Hints
@@ -91,13 +91,13 @@ From Amy,
 
 Jake please change your password. It is too weak and holt will be mad if someone hacks into the nine nine
 ```
-hehee I let Hydra do his thing::
-![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/B991edit.png)
+Hehee I let Hydra do his thing::
+![image](/assets/img/posts/B991edit.png)
 
-Welp, Jake was not the root user and the user.txt is also not his or in his home directory, I navigated to Holt's and found the user.txt flag,  
-before scp or wget...ing any Privesc script I like to manually check for LPE vectors apparently we have sudo permissions to use "less". [gtfobins](https://gtfobins.github.io/) says we can use this for privesc like so::
+Welp, Jake was not the root user and the user.txt is also not his or in his home directory, I navigated to Holt's after searchiing Amy's and finding nothing and found the user.txt flag,  
+before scp...ing or wget...ing any Privesc script I like to manually check for LPE vectors apparently we have sudo permissions to use "less". [gtfobins](https://gtfobins.github.io/) says we can use this for privesc like so::
 
-![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/b99Privesc.png)
+![image](/assets/img/posts/b99Privesc.png)
 next::
 ```
 sudo less /etc/profile 
@@ -106,9 +106,9 @@ And append
 ```
 !/bin/sh
 ```
-And that's it we are root! read the file, submit the flags.
+And that's it we are root! read the root.txt file, submit the flags.
 
-Why this was fun is because it made me understand the relevance of the /etc/profile config file, it is basically a root owned file that is ran on login of any user as a child process of systemd(like all processes are) that controls system-wide default variables especially terminal type in our case scenerio, us having priviledged access to the "less" command utility which provides a "vim or a vim-like interface" to read files and edit binaries, leveraging that allowed us carry out command operations within the file with the "less" binary allowing us spawn a root shell.
+Why this was fun is because it made me understand the relevance of the /etc/profile config file, it is basically a root owned file that is ran on login of any user as a child process of systemd(like all processes are) that controls system-wide default variables especially terminal type in our case scenerio, us having priviledged access to the "less" command utility which provides a "vim or a vim-like interface" to read files and edit binaries, and leveraging that allowed us carry out command operations within the file with the "less" binary allowing us spawn a root shell.
 
 
 
@@ -119,13 +119,13 @@ Won't be posting images to display cause I forgot to document this part lol, but
  Have you ever head of steganography?
  ```
 - Downloaded the image being served on port 80 through the server, Yes the seemingly unsuspecting image.
-  Tried a few common passwords and failed swiftly and then decided to google-fu a little for tools to bruteforce a steg image and found two: stegcracker and stegseek, although stegseek is more revered due to it's speed but I prefer stegcracker on multithread mode :)
+  Tried a few common passwords and failed swiftly and then decided to google-fu a little for tools to bruteforce a steg image and found two: stegcracker and stegseek, although stegseek is more revered due to it's speed and is an upgrade, but I prefer stegcracker on multithread mode :)
  
 - Then I used Stegcracker:
 ```
 sudo apt install stegcracker
 ```
-![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/steg-bb9.png)
+![image](/assets/img/posts/steg-bb9.png)
 
 - cat the output file, from using the pass to extract the stego image and it gives us this::
 
@@ -137,7 +137,7 @@ Enjoy!!
 ```
 
 - It gives us Holts ssh creds, I log in, Holt has a different sudo permission, easy fix: used [gtfobins](https://gtfobins.github.io/) and got root!
-And thats it!
+And thats it, We hacked the nine nine mate! ;)
 
 
 Greetings, from [Rami3l](https://www.tryhackme.com/p/Rami3l).
