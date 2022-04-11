@@ -125,7 +125,7 @@ sudo apt install stegcracker
 ```
 ![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/steg-bb9.png)
 
-- cat the output file and it gives us this
+- cat the output file, from using the pass to extract the steg image and it gives us this::
 ``` 
 Holts Password:
 fl#################e
