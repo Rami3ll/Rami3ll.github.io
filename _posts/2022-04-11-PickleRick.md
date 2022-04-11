@@ -11,8 +11,7 @@ Check it out here: [TryHackMe](https://www.tryhackme.com/room/picklerick)
 
 # ~$ Preface
   Hey there, I'll be honest this was the first time I used a web shell lol and it was indeed much fun, I'll walk you through how I went about it XD, funfact Rick&Morty has been my go-to fav cartoon since 2015,  eyepatch morty is my buddy and I genuinely have a deep seated hatred for Jerry and his insipidity ;) but as always I'll be leaving hints before I drop the spoilers, and by spoilers I mean the answers lol just kidding you won't find glaring answers here buddy hehee
-  
-  ![image](https://i.imgur.com/BkKtAkO.png)
+  ![image](https://images6.alphacoders.com/876/thumb-1920-876893.jpg)
   
 # ~$ Hints 
 - source page
@@ -75,7 +74,7 @@ Found nothing but a message from rick in dire need of our help to revert back to
     
  ```
  Okay Classic rick keeping hidden reminders for himself, I try the username on port 22 and bruteforce the creds with hydra and realized it could only be 2 things: apparently Rick's pass isn't in a wordlist OR the acquired username is not for ssh, while hydra was still trying I resort to my go-to dir enum tool, Dirsearch:)
- fire her up and get these hidden directories:
+fire her up and get these hidden directories:
  
  ```
  ┌──(azazel㉿azazel)-[~/Tryhackme/PickleRick]
@@ -102,7 +101,7 @@ Target: http://10.10.220.220/
 Task Completed
                                         
  ```
- Nothing much only interesting dir is a login page and the robots.txt, checked that out to see any pages disallowed to be crawled and Instead see Rick's catch phrase
+ Nothing much only interesting directory is a login page and the robots.txt, checked that out to see any pages disallowed to be crawled and Instead see Rick's catch phrase
  
  ```
  
