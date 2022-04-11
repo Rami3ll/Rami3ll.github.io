@@ -1,19 +1,19 @@
 ---
 layout: post
-title: Brookyln 99 Writeup
-categories: TryHackMe
+title: Brookyln Nine Nine Writeup
+categories: [TryHackMe]
 tags: [Misconfigured FTP, Steganography, Bruteforce]
 ---
  
 # Brooklyn Nine Nine 
 This room is aimed for beginner level hackers but anyone can try to hack this box. There are two main intended ways to root the box. you can check it out here:
-https://www.tryhackme.com/room/brooklynninenine
+[Tryhackme](https://www.tryhackme.com/room/brooklynninenine)
 
-# ~$Preface::
+# ~$ Preface::
 First off I am personally a huge fan of the show, (Amy is my fav character btw I'm sure yunno why lol) and Its a quite easy one, but no worries if youre stuck I'll walk you through buddy;) but first I'll leave hints to stimulate your mind:
 ![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/brooklyn99.jpg)
 
-# ~$HINTS::
+# ~$ Hints::
 - checked source code yet??
 - Port 80 exists for a reason yunno?
 - Hmph, just a picture? 
@@ -55,11 +55,13 @@ First things first, a Portscan so we know our attack surface:
 |_http-server-header: Apache/2.4.29 (Ubuntu)
 Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
 ```
-# ~$FIRST METHOD:
-Got anon logins allowed on ftp, so, swiftly I log in to "get" the file we got from our script scan: "note_to_jake.txt"
-where Amy gives us a clear hint(See why I like her?)::
+Perfect, port 21, 22 and 80, ftp, ssh and http all present, lets get to it then...
+
+# ~$ First Intended method::
+Got anon logins allowed on ftp, so, swiftly I log in to "get" the file we see from our script scan: "note_to_jake.txt" where Amy gives us a clear hint(See why I like her?)::
+
 ```
-─(azazel㉿azazel)-[~/Tryhackme/Brooklyn99]
+┌──(azazel㉿azazel)-[~/Tryhackme/Brooklyn99]
 └─$ ftp 10.10.24.94
 Connected to 10.10.24.94.
 220 (vsFTPd 3.0.3)
@@ -90,11 +92,11 @@ Jake please change your password. It is too weak and holt will be mad if someone
 hehee I let Hydra do his thing::
 ![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/B991edit.png)
 
-Welp Jake was not the root user and the user.txt is also not his or in his home directory, I navigated to Holt's and found the user.txt flag,  
-before scp or wget...ing any Privesc script I like to manually check for LPE vectors apparently we have sudo permissions to use "less" https://gtfobins.github.io/ says we can use this for privesc like so::
+Welp, Jake was not the root user and the user.txt is also not his or in his home directory, I navigated to Holt's and found the user.txt flag,  
+before scp or wget...ing any Privesc script I like to manually check for LPE vectors apparently we have sudo permissions to use "less". [gtfobins](https://gtfobins.github.io/) says we can use this for privesc like so::
 
 ![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/b99Privesc.png)
-next 
+next::
 ```
 sudo less /etc/profile 
 ```
@@ -103,36 +105,38 @@ And append
 !/bin/sh
 ```
 And thats it we are root! read the file, submit the flags.
-Why this was fun is because it made me understand the relevance of the /etc/profile config file, it is basically a root owned folder that is ran on login that controls system-wide default variables especially terminal type in our case scenerio, us having access to the "less" this through "vim/or a vim-like interface" and carry out command operations within the file with the "less" binary allowed us spawn a root shell!
+
+Why this was fun is because it made me understand the relevance of the /etc/profile config file, it is basically a root owned folder that is ran on login of any user as a child process of systemd(like all processes are) that controls system-wide default variables especially terminal type in our case scenerio, us having priviledged access to the "less" command utility which provides a "vim or a vim-like interface" to read files and edit binaries, leveraging that allowed us carry out command operations within the file with the "less" binary allowing us spawn a root shell.
 
 
 
-# Second Intended Method
-Wont be posting images to display cause I forgot to document this part, but its pretty basic, I'll give the steps here ;
+# ~$ Second Intended Method
+Won't be posting images to display cause I forgot to document this part lol, but its pretty basic, I'll give the steps here ;
 - Visited port 80 and checked source code which gave the clue:
  ```
  Have you ever head of steganography?
  ```
- Downloaded the image being served on port 80 through the server, Yes the seemingly unsuspecting image.
+- Downloaded the image being served on port 80 through the server, Yes the seemingly unsuspecting image.
  Tried a 2 common passwords and failed swiftly and then decided to google-fu a little for tools to bruteforce a steg image and found two: stegcracker and stegseek, although stegseek is more revered due to speed I prefer stegcracker on multithread mode :)
+ 
 - Then I used Stegcracker:
 ```
 sudo apt install stegcracker
 ```
 ![image](https://github.com/Rami3ll/Rami3ll.github.io/blob/main/assets/img/posts/steg-bb9.png)
 
-```
-cat the output file and it gives us this 
+- cat the output file and it gives us this
+``` 
 Holts Password:
 fl#################e
 
 Enjoy!!
 ```
+- It gives us Holts ssh creds, I log in, Holt has a different sudo permission used [gtfobins](https://gtfobins.github.io/) and got root!
+And thats it!
 
-It gives us Holts ssh creds, I log in, Holt has a different sudo permission used https://gtfobins.github.io/ and got root!:
 
-
-Greetings, from Rami3l.
+Greetings, from [Rami3l](https://www.tryhackme.com/p/Rami3l).
 
 
 
