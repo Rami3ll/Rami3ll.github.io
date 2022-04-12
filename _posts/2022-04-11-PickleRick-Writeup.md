@@ -10,15 +10,15 @@ This Rick and Morty themed challenge requires you to exploit a webserver to find
 Check it out here: [TryHackMe](https://www.tryhackme.com/room/picklerick)
 
 # ~$ Preface
-  Hey there, I'll be honest this was the first time I used a web shell lol and it was indeed much fun, I'll walk you through how I went about it XD, funfact Rick&Morty has been my go-to fav cartoon since 2015,  eyepatch morty is my buddy and I genuinely have a deep seated hatred for Jerry and his insipidity ;) but as always I'll be leaving hints before I drop the spoilers, and by spoilers I mean the answers lol just kidding you won't find glaring answers here buddy hehee
+  Hey there! I'll be honest this was the first time I used a web shell lol and it was indeed much fun, I'll walk you through how I went about it XD, funfact Rick&Morty has been my go-to fav cartoon since 2015, eyepatch morty is my buddy and I genuinely have a deep seated hatred for Jerry and his insipidity ;) but as always I'll be leaving hints before I drop the spoilers, and by spoilers I mean the answers lol just kidding you won't find glaring answers here buddy hehee
   ![image](https://images6.alphacoders.com/876/thumb-1920-876893.jpg)
   
 # ~$ Hints 
 - source page
 - command injection?
 - web shells
-- directory enumeration
-- extensions.
+- directory enumeration(try a different directory busting wordlist)
+- extensions.(.php)
 
 A'ight so as always, a port scan first::
 ```
@@ -72,12 +72,12 @@ Found nothing but a message from rick in dire need of our help to revert back to
     Username: R1ckRul3s   
  ```
  
- Okay Classic rick keeping hidden reminders for himself, I try the username on port 22 and bruteforce the creds with hydra and realized it could only be 2 things: apparently Rick's pass isn't in a wordlist OR the acquired username is not for ssh, while hydra was still trying I resort to my go-to dir enum tool, Dirsearch:)
+ Okay Classic rick keeping hidden reminders for himself, I try the username on port 22 and bruteforce the creds with hydra and realized it could only be 2 things: apparently Rick's pass isn't in a wordlist OR the acquired username is not for ssh, while hydra was still trying I resort to my go-to dir enum tool, Dirsearch!:-)
 fire her up and get these hidden directories:
  
  ```
  ┌──(azazel㉿azazel)-[~/Tryhackme/PickleRick]
-└─$ dirsearch -u 10.10.220.220 -w /usr/share/wordlists/dirb/common.txt -t 30
+└─$ dirsearch -u 10.10.220.220 -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -t 30
 
   _|. _ _  _  _  _ _|_    v0.4.2
  (_||| _) (/_(_|| (_| )
@@ -145,9 +145,11 @@ www-data@ip-10-10-60-92:/home/rick$ cat second\ ingredients
 1 #### tear
 ```
 
-And as compensation and horrible security, the www-data user who we are logged in as has sudo permissions to execute EVERYTHING? sheesh!
+Checking sudo permissions, only to find as compensation and horrible security, the www-data user who we are logged in as has sudo permissions to execute EVERYTHING? sheesh!
 
 ```
+www-data@ip-10-10-60-92:/home/rick$ sudo -l
+
 Matching Defaults entries for www-data on ip-10-10-60-92.eu-west-1.compute.internal:
     env_reset, mail_badpass,
     secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin,
@@ -164,3 +166,5 @@ www-data@ip-10-10-60-92:/home/rick$ sudo su
 root@ip-10-10-60-92: cd /root; cat 3rd.txt
 ```
 And that's it! We saved Rick and got to see jerry tears too --the joy:-)
+
+Greetings, from [Rami3l](https://www.tryhackme.com/p/Rami3l).
