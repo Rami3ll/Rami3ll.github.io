@@ -296,11 +296,11 @@ http://<ipaddr>/index.php?plot=; cat log.txt
 ```
   ![image](/assets/img/posts/BoilerCTF/ssh-creds.png)
 
-It looks like the log file contains ssh creds of a user "Basterd" and his pass all in plaintext. Hehee
+It looks like the log file contains ssh creds of a user "Basterd" and his pass all in plaintext. Hehee😈
 
 
 ## ~$ Initial Access & Priviledge escalation::
-#### _Hackers don't break in, we log in_::
+#### _Hackers don't break in, we log in_
   ![image](/assets/img/posts/BoilerCTF/initial-access.png)
 
 In "his" home directory seems there is some sort of backup script that belongs to another use who has a little more priviledges by virtue of SUID bit set for him on the find binary, cat the file and we have his creds, horizontal privesc with with his creds and then navigate to his home directory, the .secret file contains the first flag and then to privesc we have SUID bit set on find
@@ -310,7 +310,7 @@ find / -type f -perm -4000 2>/dev/null
 find / -type f -perm -u=s 2>dev/null
 ```
 
-[gtfobin](https://gtfobins.github.io/gtfobins/find/#suid) says we could use the misconfigured binary by running 
+[GTFOBins](https://gtfobins.github.io/gtfobins/find/#suid) says we could use the misconfigured binary by running 
 ```
 /usr/bin/find . -exec /bin/sh -p \; -quit
 ```
