@@ -281,7 +281,8 @@ output will appear bottom side of the scroll screen.
 It looks like once we replace the post argument in the query string in the url with a command of our choice, it executes on the system, like a passive command injection!(passive because the results of the executed commands are not directly outputted onto the screen but still executes in the background by the system) Awesome!
 
 To test our exploit::
-![image](/assets/img/posts/BoilerCTF/exploit-use.png)
+
+  ![image](/assets/img/posts/BoilerCTF/exploit-use.png)
 
 To reveal the result of our query-inserted command, just click on the "Select Host" option and the drop down will reveal the results of the query which was passed as a system command!
 It also appears to have a weird log.txt document in the current directory when you execute "ls -la" by inserting it like so
