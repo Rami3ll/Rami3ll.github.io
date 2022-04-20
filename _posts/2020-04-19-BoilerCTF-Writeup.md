@@ -9,7 +9,7 @@ tags: [Command Injection, CMS, Enumeration, Sar2HTML]
 Hey there! have to say this was frustratingly fun lol, filled with so many dead ends too. You could check it out here [Tryhackme](https://www.tryhackme.com/room/boilerctf2), I'll walk you through buddy!
 
 ## ~$ Hints
-- Recursive numeration
+- Recursive enumeration
 - Don't bother Bruteforcing... You're overthinking it.
 - 2HTML
 - ExploitDB
@@ -259,7 +259,7 @@ One of the few encoded texts translated to this ::
 
 This machine was taunting me at this point.
 
-# ~$ Exploitation
+# ~$ Exploitation💀
 To cut to the chase, after all the swift fails and checking webmin on port 10000, I decided to revisit this weird test directory I found 
 
 ``/joomla/_test  ->  http://10.10.47.112/joomla/_test/ ``
