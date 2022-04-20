@@ -5,7 +5,7 @@ categories: [TryHackMe]
 tags: [Command Injection, CMS, Enumeration, Sar2HTML]
 ---
 
-# ~$ BoilerCTF walkthrough
+# BoilerCTF walkthrough
 Hey there! have to say this was frustratingly fun lol, filled with so many dead ends too. You could check it out here [Tryhackme](https://www.tryhackme.com/room/boilerctf2), I'll walk you through buddy!
 
 ## ~$ Hints
