@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Boiler CTF
+title: BoilerCTF Walkthrough
 categories: [TryHackMe]
 tags: [Command Injection, CMS, Enumeration, Sar2HTML]
 ---
 
 # ~$ BoilerCTF walkthrough
-	Hey there! have to say this was frustratingly fun lol, filled with so many dead ends too. You could check it out here @ [Tryhackme](https://www.tryhackme.com/room/boilerctf2)
-I'll walk you through buddy!
+Hey there! have to say this was frustratingly fun lol, filled with so many dead ends too. You could check it out here [Tryhackme](https://www.tryhackme.com/room/boilerctf2)
+  I'll walk you through buddy!
 
 ## $Hints
 - Recursive numeration
@@ -17,6 +17,7 @@ I'll walk you through buddy!
 
 ## Scanning & Enumeration::
   As always:
+
 ```
 ┌──(azazel㉿azazel)-[~]
 └─$ sudo nmap -sV -sC -sS 10.10.47.112 -vv -p- -T4                                                              130 ⨯
@@ -145,7 +146,7 @@ Nmap done: 1 IP address (1 host up) scanned in 1446.21 seconds
 From our scans we have Ftp, http, ssh(on a rather uncommon port) and Webmin to work with.
 
 We got anon logins from ftp, so I hit the server
-[image](/assets/img/boiler-ftp.png)
+[image](/assets/img/posts/BoilerCTF/boiler-ftp.png)
 A "full"(ls -la) directory listing gave me the .info.txt which was well...pretty useless: 
 ```
 ┌──(azazel㉿azazel)-[~/Tryhackme/BoilerCTF]
@@ -153,10 +154,10 @@ A "full"(ls -la) directory listing gave me the .info.txt which was well...pretty
 Whfg jnagrq gb frr vs lbh svaq vg. Yby. Erzrzore: Rahzrengvba vf gur xrl!
 ```
 contained a ROT13 encoded text which translated into a humble reminder from [Seth](https://www.tryhackme.com/p/MrSeth6797), on enumreration as the key...
-[image](/assets/imgdecode.png)
+[image](/assets/img/posts/BoilerCTF/decode.png)
 How very thoughtful:) Moving on, I decide to check out our buddy on port 80!
 We're greeted with the default Apache landing page, on checking the source I find no suspiscious content, say less::
-![image](/assets/dir-enum.png)
+![image](/assets/img/posts/dir-enum.png)
 Robots.txt tells gives us this info:
 ```
 
@@ -275,10 +276,10 @@ First thing I checked was this
 Which led to a login page, a bruteforce attempt isnt so wise here cause I found a csrf token in the source code(I read up on this and apparently it would hinder an exhaustive search since it expires on first login attempt)
 
 I decided to swiftly visit all the other subdirs to find anything we could leverage to maybe spawn a shell or get ssh keys somehow...
-![iamge](/assets/img/dead-end.png) ![image](/assets/img/dead-end2.png) ![image](/assets/code3)
+![iamge](/assets/img/posts/BOILERCTF/dead-end.png) ![image](/assets/img/dead-end2.png) ![image](/assets/code3)
 
 One of the few encoded texts translated to this ::
-![image](/assets/img/decrypt3.png)
+![image](/assets/img/posts/BOILERCTF/decrypt3.png)
 
 This machine was taunting me at this point.
 ![image](https://giphy.com/gifs/wetv-cant-xTiTngHGyb6C8qMkta)
@@ -289,7 +290,7 @@ To cut to the chase, after all the swift fails and checking webmin on port 10000
 We find a sar2html page out of curiousity::
 _Basically a sar2html is an opensource project that converts sar binary data to graphical html_
 My interest specifically was in exploiting this, on checking exploitdb, an RCE vuln exists for version 3.2.1::
-![image](/assets/img/exploit.png)
+![image](/assets/img/posts/BOILERCTF/exploit.png)
 
 From this exploit:
 ```
@@ -301,7 +302,7 @@ output will appear bottom side of the scroll screen.
 ```
 It looks like once we replace the post argument in the query string in the url with a command of our choice, it executes on the system, like a passive command injection!(passive because the results of the executed commands are not directly outputted onto the screen but still executes in the background by the system) Awesome!
 To test our exploit::
-![image](/assets/img/exploit-use.png)
+![image](/assets/img/posts/BOILERCTF/exploit-use.png)
 To reveal the result of our query-inserted command, just click on the "Select Host" option and the drop down will reveal the results of the query which was passed as a system command!
 It also appears to have a weird log.txt document in the current directory when you execute "ls -la" by inserting it like so
 
@@ -312,12 +313,12 @@ so just cat log.txt::
 ```
 http://<ipaddr>/index.php?plot=; cat log.txt
 ```
-![image](/assets/img/ssh-creds)
+![image](/assets/img/posts/BOILERCTF/ssh-creds)
 It looks like the log file contains ssh creds of a user "Basterd" and his pass all in plaintext. Hehee
 ![image](https://giphy.com/gifs/happy-laugh-evil-AFlyHDgGqSJO)
 
 _Hackers don't break in, we log in_::
-![image](assets/img/initial-access.png)
+![image](assets/img/posts/BOILERCTF/initial-access.png)
 In "his" home directory seems there is some sort of backup script that belongs to another use who has a little more priviledges by virtue of SUID bit set for him on the find binary, cat the file and we have his creds, horizontal privesc with with his creds and then navigate to his home directory, the .secret file contains the first flag and then to privesc we have SUID bit set on find
 ```
 find / -type f -perm -4000 2>/dev/null 
@@ -330,7 +331,8 @@ find / -type f -perm -u=s 2>dev/null
 /usr/bin/find . -exec /bin/sh -p \; -quit
 ```
 And spawn a priviledged shell and read our root flag, like so::
-![image](/assets/img/end.jpg)
+  ![image](/assets/img/posts/BOILERCTF/end.jpg)
+
 Rooted!
 
-Salam, [Rami3l](https://www.tryhackme.com/profile)
+Salaam, [Rami3l](https://www.tryhackme.com/p/Rami3l)
