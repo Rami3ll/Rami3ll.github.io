@@ -1,7 +1,7 @@
 ---
 layout: post
 title: NahamCon 2022 CTF - challenge walkthrough.
-Categories: CTF
+Categories: [CTF]
 tags: [NahamCon, NahamconCTF, Netcat, Warmup Challenges, NahamSec, ctfs, John Hammond]
 ---
 
@@ -148,11 +148,13 @@ Note that your result from that site converts little HEX endian to Big HEX endia
     ![image](/assets/img/posts/Nahamcon/wizard.png)
     
   And that's our flag, thank you Gandalf. lol
+  An alternative would be to use Cyber chef's "swap endianess" feature to convert it to big endian and then decode the hex. 
   
  #### Techncal Support
-   For the last and easiest warmup challenge, all we have to do is join the discord server go to the "ctf-help" channel, and sensei John Hammond has a flag waiting there for us!
+   For the last and easiest warmup challenge, all we have to do is join the discord server go to the "ctf-help" channel, the flag is the heading of the channel. and sensei John Hammond has a flag waiting there for us!
    
    
  Thank you for your time, this was a long read lol, this would be updated more frequently to include writeups for the remaining challenges!
+
 Salaam! [Rami3l](https://www.linkedin.com/in/daniel-johnson-9a39aa215/).
   
