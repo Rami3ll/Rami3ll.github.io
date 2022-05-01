@@ -9,13 +9,13 @@ tags: [Misconfigured FTP, Steganography, Bruteforce]
 This room is aimed for beginner level hackers but anyone can try to hack this box. There are two main intended ways to root the box, you can check it out here: [Tryhackme](https://www.tryhackme.com/room/brooklynninenine)
           
           
-# ~$ Preface
+## Preface
 First off I am personally a huge fan of the show, (Amy is my fav character btw I'm sure yunno why lol) and It's a quite easy one, but no worries if you're stuck I'll walk you through buddy;) but first I'll leave hints to stimulate your mind:
 
 ![image](/assets/img/posts/brooklyn99.jpg)
 
 
-# ~$ Hints
+## Hints
 - checked source code yet??
 - Port 80 exists for a reason yunno?
 - Hmph, just a picture? 
@@ -59,7 +59,7 @@ Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 Perfect, port 21, 22 and 80, ftp, ssh and http all present, lets get to it then...
 
-# ~$ First method::
+## First method::
 Got anon logins allowed on ftp, so, swiftly I log in to "get" the file we see from our script scan: "note_to_jake.txt" where Amy gives us a clear hint(See why I like her?)::
 
 ```
@@ -112,14 +112,15 @@ Why this was fun is because it made me understand the relevance of the /etc/prof
 
 
 
-# ~$ Second Intended Method
+## Second Intended Method
 Won't be posting images to display cause I forgot to document this part lol, but its pretty basic, I'll give the steps here ;
 - Visited port 80 and checked source code which gave the clue:
  ```
  Have you ever head of steganography?
  ```
 - Downloaded the image being served on port 80 through the server, Yes the seemingly unsuspecting image.
-  Tried a few common passwords and failed swiftly and then decided to google-fu a little for tools to bruteforce a steg image and found two: stegcracker and stegseek, although stegseek is more revered due to it's speed and is an upgrade, but I prefer stegcracker on multithread mode :)
+  Tried a few common passwords and failed swiftly and then decided to google-fu a little for tools to bruteforce a steg image and found two: stegcracker and stegseek, although stegseek is more revered due to it's speed and is an upgrade, but I prefer stegcracker on multithread :) 
+  (this is me from the future taking back what I said here back lmao, stegseek is King)
  
 - Then I used Stegcracker:
 ```
@@ -136,11 +137,8 @@ fl#################e
 Enjoy!!
 ```
 
-- It gives us Holts ssh creds, I log in, Holt has a different sudo permission, easy fix: used [gtfobins](https://gtfobins.github.io/) and got root!
+- It gives us Holts ssh creds, I log in, Holt has a different sudo permission(Nano), easy fix: used [gtfobins](https://gtfobins.github.io/) and got root!
 And thats it, We hacked the nine nine mate! ;)
 
 
-Greetings, from [Rami3l](https://www.tryhackme.com/p/Rami3l).
-
-
-
+Greetings, from [Rami3l](https://www.tryhackme.com/p/Rami3l)
