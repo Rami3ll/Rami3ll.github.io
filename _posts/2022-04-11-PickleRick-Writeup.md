@@ -5,15 +5,15 @@ categories: [TryHackMe]
 tags: [Command Injection, Web shell, Directory Enumeration, Dirsearch]
 ---
 
-# Pickle Rick Walkthrough.
+# Pickle Rick
 This Rick and Morty themed challenge requires you to exploit a webserver to find 3 ingredients that will help Rick make his potion to transform himself back into a human from a pickle.
 Check it out here: [TryHackMe](https://www.tryhackme.com/room/picklerick)
 
-# ~$ Preface
+## Preface
   Hey there! I'll be honest this was the first time I used a web shell lol and it was indeed much fun, I'll walk you through how I went about it XD, funfact Rick&Morty has been my go-to fav cartoon since 2015, eyepatch morty is my buddy and I genuinely have a deep seated hatred for Jerry and his insipidity ;) but as always I'll be leaving hints before I drop the spoilers, and by spoilers I mean the answers lol just kidding you won't find glaring answers here buddy hehee
   ![image](https://images6.alphacoders.com/876/thumb-1920-876893.jpg)
   
-# ~$ Hints 
+## Hints 
 - source page
 - command injection?
 - web shells
@@ -166,5 +166,7 @@ www-data@ip-10-10-60-92:/home/rick$ sudo su
 root@ip-10-10-60-92: cd /root; cat 3rd.txt
 ```
 And that's it! We saved Rick and got to see jerry tears too --the joy:-)
+
+Thank you for reading.
 
 Greetings, from [Rami3l](https://www.tryhackme.com/p/Rami3l).
