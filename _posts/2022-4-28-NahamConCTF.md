@@ -2,6 +2,7 @@
 layout: post
 title: NahamCon 2022 CTF - challenge walkthrough.
 Categories: CTF
+tags: [Nahamcon, NahamCon, NahamconCTF, Netcat, Warmup Challenge, NahamSec]
 ---
 
 
@@ -43,15 +44,15 @@ quirky: ASCII text, with very long lines (1612), with no line terminators
   ![image](/assets/img/posts/Nahamcon/quirky1.png)
   
 a QR code, awesome! cyberchef has a qr decoder yunno, so, on decoding, we got our flag!
-  ![image](/assets/img/postsNahamcon/quirky2.png)
-  ![image](/assets/img/postsNahamcon/quirky3)
+  ![image](/assets/img/posts/Nahamcon/quirky2.png)
+  ![image](/assets/img/posts/Nahamcon/quirky3.png)
    
 #### Prisoner
   This was awesome, had a little hint from a comrade on this one, this was my second rendezvous with a python jail(check out [tryhackme's Tokyo Ghoul](https://www.tryhackme.com/room/tokyoghoul666) for a more challenging prison).
   From the challenge name I already knew that was what I would be dealing with, to get to it, deploy the instance, and ssh into it, automatically it sends us to jail, touche, to exit the script's hold ctrl+d and you should have the classic python ```>>> ``` IDLE prompt now, meaning we are still in some sorta python pty, this gives us the advantage of executing commands of either reading files directly or completely spawn a shell;) like the one we use to import a pty for tty stabilisation, here's my two methods:
   
   METHOD 1: spawning a pty shell to have full access to the environment.
-  ![image](/assets/img/posts/Nahamcon/prisoner1.png)
+  ![image](/assets/img/posts/Nahamcon/prisoner-1.png)
   
   METHOD 2 : using the import library and executing arbitrary commands through the IDLE shell with the os.system()function
   all we just have to do here import the library and pass the commands we want to execute to the os.system library as a parameter.
@@ -62,7 +63,7 @@ a QR code, awesome! cyberchef has a qr decoder yunno, so, on decoding, we got ou
 there are esentially 3 ways to exit vim: you could either:: 
 - :wq -- to write and save  (include the ":")
 - :q! -- force quit     (include the ":")
-- ZZ (capital " ee zee") this saves and quits. (My personal favourite)
+- ZZ (capital "zee zee") this saves and quits. (My personal favourite)
  
  #### Crash Override
   This was personally my favourite task, if how I solved it was the intended way? I have no idea but keep reading you might learn a new netcat trick! hehee:)
@@ -109,19 +110,23 @@ And Boom! we have our flag.
   This one was fun, it was centered around encoding and decoding, all you have to do is cook your way to the flag ;) 
 Heres the fix, we answer 6 questions correctly from Gandalf the great and he gives us our flag, cool!
 first was a binary to ASCII question
-![image](/assets/img/posts/Nahamcon/cook1.png)
+
+  ![image](/assets/img/posts/Nahamcon/cook1.png)
 
 Next question was a hex to ASCII conversion::
-![image](/assets/img/posts/Nahamcon/cook2.png)
+
+  ![image](/assets/img/posts/Nahamcon/cook2.png)
 
 Next question was an Octal to ASCII question, this wizard was starting to really push it
 we would have to conert from octal -- base10 aka int aka Decimal --- hex--- ascii just like regular Maths yunno!
 I used [Rapid Tables](https://www.rapidtables.com/convert/number/hex-to-ascii.html) for this one, since it has the capabilities to do a direct octal to hex conversion:
-![image](/assets/img/posts/Nahamcon/cook3.1.png)
+
+  ![image](/assets/img/posts/Nahamcon/cook3.1.png)
   ![image](/assets/img/posts/Nahamcon/cook3.2.png)
 
 Next question, is a decimal to ASCII conversion
-![image](/assets/img/posts/Nahamcon/cook4.1.png)
+
+  ![image](/assets/img/posts/Nahamcon/cook4.1.png)
   ![image](/assets/img/posts/Nahamcon/cook4.2.png)
 
 FIfth question is a base64 conversion to ascii
@@ -139,6 +144,7 @@ Note that your result from that site converts little HEX endian to Big HEX endia
 ![image](/assets/img/posts/Nahamcon/cook6.png)
   ![image](/assets/img/posts/Nahamcon/cook6.2.png)
     ![image](/assets/img/posts/Nahamcon/wizard.png)
+    
   And that's our flag, thank you Gandalf. lol
   
   ### Techncal Support
