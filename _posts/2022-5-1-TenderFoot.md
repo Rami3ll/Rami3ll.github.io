@@ -15,6 +15,7 @@ The task is simple, grab all 3 flags (user1.txt, user2.txt, proof.txt).
  - Netdiscover
  - Nmap ping sweep scan aka ICMP packet reception scan
 My Go-to is Netdiscover:
+
 ```
 sudo netdiscover -i wlan0 -r 192.168.x.x/24
 ```
