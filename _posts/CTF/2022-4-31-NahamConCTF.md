@@ -1,7 +1,7 @@
 ---
 layout: post
 title: NahamCon 2022 CTF - challenge walkthrough
-Categories: [CTF]
+categories: [CTF]
 tags: [NahamCon, NahamconCTF, Netcat, Warmup Challenges, NahamSec, ctfs, John Hammond]
 ---
 
