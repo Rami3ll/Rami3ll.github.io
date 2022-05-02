@@ -8,13 +8,13 @@ tags: [Command Injection, CMS, Enumeration, Sar2HTML]
 # Preface
 Hey there! have to say this was frustratingly fun lol, filled with so many dead ends too. You could check it out here [Tryhackme](https://www.tryhackme.com/room/boilerctf2), I'll walk you through buddy!
 
-## ~$ Hints
+##  Hints
 - Recursive enumeration
 - Don't bother Bruteforcing... You're overthinking it.
 - 2HTML
-- ExploitDB
+- Exploit-DB
 
-## ~$ Scanning & Enumeration::
+## Scanning & Enumeration::
   As always:
 ```
 ┌──(azazel㉿azazel)-[~]
@@ -47,9 +47,6 @@ SYN Stealth Scan Timing: About 16.23% done; ETC: 21:33 (0:15:19 remaining)
 SYN Stealth Scan Timing: About 17.14% done; ETC: 21:35 (0:16:46 remaining)
 Warning: 10.10.47.112 giving up on port because retransmission cap hit (6).
 Discovered open port 55007/tcp on 10.10.47.112
-SYN Stealth Scan Timing: About 40.07% done; ETC: 21:39 (0:14:50 remaining)
-SYN Stealth Scan Timing: About 46.19% done; ETC: 21:40 (0:13:36 remaining)
-SYN Stealth Scan Timing: About 75.36% done; ETC: 21:38 (0:05:52 remaining)
 SYN Stealth Scan Timing: About 80.18% done; ETC: 21:38 (0:04:40 remaining)
 Discovered open port 10000/tcp on 10.10.47.112
 SYN Stealth Scan Timing: About 85.05% done; ETC: 21:38 (0:03:29 remaining)
@@ -245,7 +242,6 @@ CTRL+C detected: Pausing threads, please wait...
 ```
 Sheesh, alot of sub directories uhn?
   
-
 First thing I checked was this
  ```->  http://10.10.47.112/joomla/administrator/ ```
 
@@ -299,7 +295,7 @@ http://<ipaddr>/index.php?plot=; cat log.txt
 It looks like the log file contains ssh creds of a user "Basterd" and his pass all in plaintext. Hehee😈
 
 
-## ~$ Initial Access & Priviledge escalation::
+## Initial Access & Priviledge escalation::
 #### _Hackers don't break in, we log in_
   ![image](/assets/img/posts/BoilerCTF/initial-access.png)
 
