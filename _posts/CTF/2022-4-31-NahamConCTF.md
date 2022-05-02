@@ -17,7 +17,7 @@ tags: [NahamCon, NahamconCTF, Netcat, Warmup Challenges, NahamSec, ctfs, John Ha
 #### Flagcat
   This one's basic, I grabbed the flagcat file, read with cat, and that's pretty much it!
   ```
-  ┌──(azazel㉿azazel)-[~/Documents/Nahamcon/General]
+┌──(azazel㉿azazel)-[~/Documents/Nahamcon/General]
 └─$ cat flagcat 
  ---------------------------------------- 
 | flag{ab3cbaf45def9056dbfad706d597fb53} |
