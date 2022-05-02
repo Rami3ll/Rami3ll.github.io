@@ -231,7 +231,9 @@ Cool this might just be chandlers creds. lets try logging in
 Even without [GTFOBins](https://gtfobins.github.io/gtfobins/ftp/#sudo) enabling sudo on ftp is a clean shot to get root.
 ![image](/assets/img/posts/vulnhub/TenderFoot/root.png)
 
-And that's it, fully compromised.
+And that's it, fully compromised!
+Due to the emergence of findings of newer vulnerabilities and evolving tech, there are so many ways to get root instantly on this machine, one of which is Pwnkit(CVE-2021-4034)which allows us abuse pkexec by virtue of SUID bit set on the binary, nonetheless those are all unintended ways and not ideal.:)
+
 > The difference between a hacker and a Noob, is that a hacker has failed more times than a Noob has ever tried.
  
 Thanks for the read.
