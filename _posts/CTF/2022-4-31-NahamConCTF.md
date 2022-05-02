@@ -7,7 +7,7 @@ tags: [NahamCon, NahamconCTF, Netcat, Warmup Challenges, NahamSec, ctfs, John Ha
 
 
 ## PREFACE
-  Considering how big of a fan I am of Naham and John Hammond, this ctf was quit a big deal to me! And it was awesomeeeeeee, so much fun and involved categories which I really liked like malware analysis, I would only be posting solutions to the questions a humble noob like myself could solve, so my apologies if you sought answers which you did not find present here. <3
+  Considering how big of a fan I am of Naham and John Hammond, this ctf was quit a big deal to me! it was so much fun and involved categories which I really liked like malware analysis, eventho I couldnt solve some lol, I would only be posting solutions to the questions a humble noob like myself could solve, so my apologies if you sought answers which you did not find present here. <3
   
  nb: This will frequently be updated for a couple days.
  
@@ -150,7 +150,7 @@ Note that your result from that site converts little HEX endian to Big HEX endia
   And that's our flag, thank you Gandalf. lol
   An alternative would be to use Cyber chef's "swap endianess" feature to convert it to big endian and then decode the hex. 
   
- #### Techncal Support
+#### Techncal Support
    For the last and easiest warmup challenge, all we have to do is join the discord server go to the "ctf-help" channel, the flag is the heading of the channel. and sensei John Hammond has a flag waiting there for us!
    
    
