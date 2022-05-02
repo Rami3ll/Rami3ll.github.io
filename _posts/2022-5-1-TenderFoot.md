@@ -133,10 +133,13 @@ Decrypt it!
 On decoding it says:
 ![image](/assets/img/posts/vulnhub/TenderFoot/deadend1.png)
 
-welp that's sad, moving on, I decide to do a directory enumeration, after trying out around 5 wordlists I finally get a hit with seclists::
+welp that's sad, moving on, I decide to do a directory enumeration, after trying out around 5 wordlists 
+
+I finally get a hit with seclists::
 ![image](/assets/img/posts/vulnhub/TenderFoot/dirsearch.png)
 
 We know /hint is a deadend let's visit /fotocd
+
 
 ![image](/assets/img/posts/vulnhub/TenderFoot/brainfuck.png)
 
@@ -209,8 +212,10 @@ Cop the user2.txt flag.
 ![image](/assets/img/posts/vulnhub/TenderFoot/chandler.png)
 
 Now to gain elevated privileges, 
->>if theres anything this box taught me is always try to get user creds to login properly over a pty cause sometimes the SUID Biniaries set for that user might not really display as they should.
+>if theres anything this box taught me is always try to get user creds to login properly over a pty cause sometimes the SUID Biniaries set for that user might not really display as they should.
+
 Luckily for us we have a new clue, a base32 encoded charset::
+
 ```
 ┌──(azazel㉿azazel)-[~/Vulnhub/TenderFoot]
 └─$ echo -n OBQXG43XMQ5FSMDVINZDIY3LJUZQ==== | base32 -d
@@ -224,6 +229,7 @@ Even without [GTFOBins](https://gtfobins.github.io/gtfobins/ftp/#sudo) enabling 
 ![image](/assets/img/posts/vulnhub/TenderFoot/root.png)
 
 And that's it, fully compromised.
+>The difference between a hacker and a Noob, is that a hacker has failed more times than a Noob has ever tried.
 Thanks for the read.
 
 From Rami3l with <3.
