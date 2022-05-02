@@ -2,7 +2,7 @@
 layout: post
 title: TenderFoot:1 Writeup
 categories: [Vulnhub]
-tags: [Enumeration]
+tags: [Enumeration, Esoteric Languages, Brainfuck]
 ---
  
 ## Preface
