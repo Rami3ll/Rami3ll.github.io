@@ -255,7 +255,7 @@ One of the few encoded texts translated to this ::
 
 This machine was taunting me at this point.
 
-# ~$ Exploitation💀
+## Exploitation💀
 To cut to the chase, after all the swift fails and checking webmin on port 10000, I decided to revisit this weird test directory I found 
 
 ``/joomla/_test  ->  http://10.10.47.112/joomla/_test/ ``
