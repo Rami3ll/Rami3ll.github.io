@@ -12,6 +12,6 @@ order: 4
 >> The writings also will be my future reference. Hopefully my little write ups here will be of great help and/or benefits.
  
 ## Finally
->Thank you for reading my blog post and I hope you have as much fun reading it as I had writing it.
->>if you have issues with any of my writeups feel free to hit me up on Discord @Rami3l#8039
->>>This is and always will be a noob space! great to have you here mate! Welcome to my little corner.
+>Thank you for reading my blog post and I hope you have as much fun reading it as I had writing it!
+>if you have issues with any of my writeups feel free to hit me up on Discord @Rami3l#8039
+>>This is and always will be a noob space! great to have you here mate! Welcome to my little corner.
