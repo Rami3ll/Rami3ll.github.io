@@ -162,6 +162,7 @@ dirsearch -u http://192.168.0.141/ -w  /usr/share/seclists/Discovery/Web-Content
 ```
 we get the entry.js has a user, "monica"
 
+
 ![image](/assets/img/posts/vulnhub/TenderFoot/username.png)
 
 Lets login on ssh with her creds! monica:$99990$
@@ -174,6 +175,7 @@ Next we have this Joey directory with a whole bunch of other subdirectories :) j
   ![image](/assets/img/posts/vulnhub/TenderFoot/access2.png)
   
 We have a new clue, the fotocd subdirectory::
+
 ![image](/assets/img/posts/vulnhub/TenderFoot/parent-dir.png)
 
 We have access to the parent directory of the site and have a zip protected file and a note.txt file waiting for us, just grab those and check them out:
@@ -212,9 +214,10 @@ Cop the user2.txt flag.
 ![image](/assets/img/posts/vulnhub/TenderFoot/chandler.png)
 
 Now to gain elevated privileges, 
->if theres anything this box taught me is always try to get user creds to login properly over a pty cause sometimes the SUID Biniaries set for that user might not really display as they should.
+> if there's anything this box taught me is always try to get user creds to login properly over a pty cause sometimes the SUID Biniaries set for that user might not really display as they should.
 
 Luckily for us we have a new clue, a base32 encoded charset::
+
 
 ```
 ┌──(azazel㉿azazel)-[~/Vulnhub/TenderFoot]
@@ -229,7 +232,8 @@ Even without [GTFOBins](https://gtfobins.github.io/gtfobins/ftp/#sudo) enabling 
 ![image](/assets/img/posts/vulnhub/TenderFoot/root.png)
 
 And that's it, fully compromised.
->The difference between a hacker and a Noob, is that a hacker has failed more times than a Noob has ever tried.
+> The difference between a hacker and a Noob, is that a hacker has failed more times than a Noob has ever tried.
+ 
 Thanks for the read.
 
 From Rami3l with <3.
