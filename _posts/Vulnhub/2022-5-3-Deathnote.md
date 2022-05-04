@@ -8,11 +8,12 @@ tags: [wordpress,webshell,sensitive information disclosure]
 ### Preface
   Hi! this is a walkthrough of the Vulnhub machine [Deathnote](https://www.vulnhub.com/entry/deathnote-1,739/),One of my favourite anime's of all time and described by the author as a Straight forward box, ranked 
 Level - easy with a very helpful advice "don't waste too much time thinking outside the box". Initially I felt it was too easy to make a writeup about this machine but I encountered some things for the first time while hacking wordpress, and I hope it'll be of help to you just incase you get stuck;)
-There are 2 intended ways of gaining Access, I'll walk you through both ways! The goa is simple...Get Root!
+There are 2 intended ways of gaining Access, I'll walk you through both ways! The goal is simple...Get Root!
 
 ### Live Host Discovery
   Once deployed on a hypervisor, we need to find a way to find our targets ip, this we could do through an arp-scan with netdiscover or the arp-scan command utility::
 - with arp-scan
+
 ```
 ┌──(azazel㉿azazel)-[~/Vulnhub/Deathnote]
 └─$ sudo arp-scan 192.168.0.124/24
@@ -24,13 +25,14 @@ Starting arp-scan 1.9.7 with 256 hosts (https://github.com/royhills/arp-scan)
 
 2 packets received by filter, 0 packets dropped by kernel
 Ending arp-scan 1.9.7: 256 hosts scanned in 2.015 seconds (127.05 hosts/sec). 2 responded
-
 ```
 - Or with netdiscover
+
 ```
 sudo netdiscover -i wlan0 -r 192.x.x.x/24
 ```
 > The above methods function through the same procedure of flooding the subnet with arp-requests, and any hosts active would reply with an arp-reply.
+
 
 ### Reconaissance: Port Scan
   To enumerate for services on our target::
@@ -107,6 +109,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 8.11 seconds
 ```
 On visiting port 80, the ip automatically resolves to a "www.deathnote.vuln/wordpress/" and the page doesn't load, 
+
 > In simple terms, this is as a result of a resolution conflict by DNS not recognising that site as the bearer of the ip.
 
 ![image](/assets/img/posts/vulnhub/Deathnote/site.png)
@@ -224,6 +227,7 @@ please protect one of the following
 1. L (/opt)
 2. Misa (/var)             
 ```
+
 We already know whats in the misa file and the L folder, next up, let's get root!
 checking sudo permissions, Kira can run everything with sudo!
 
@@ -235,6 +239,7 @@ Rooooooooooooooted.
   Man I found a clue that completely flew over my head until I gained foothold, maybe cause I was itchy to use a webshell haha, but here goes nothing::
  checking the robots.txt...```$ip/robots.txt```
  we have a clue:
+ 
  ```
 fuck it my dad 
 added hint on /important.jpg
