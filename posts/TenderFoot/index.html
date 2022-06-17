@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="en" data-mode="dark" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.2.2" /><meta property="og:title" content="TenderFoot:1 Writeup" /><meta property="og:locale" content="en" /><meta name="description" content="Preface Hey there! This is my writeup for the Vulnhub machine TenderFoot, Its described by it’s author as “A very Easy Box for beginners”, and is recommended for folks new to Vulnhub like myself. The task is simple, grab all 3 flags (user1.txt, user2.txt, proof.txt). Live Host Discovery This could essentially be done in 3 ways(that I know of): Arp-scan Netdiscover Nmap ping sweep scan aka ICMP packet reception scan My Go-to is Netdiscover:" /><meta property="og:description" content="Preface Hey there! This is my writeup for the Vulnhub machine TenderFoot, Its described by it’s author as “A very Easy Box for beginners”, and is recommended for folks new to Vulnhub like myself. The task is simple, grab all 3 flags (user1.txt, user2.txt, proof.txt). Live Host Discovery This could essentially be done in 3 ways(that I know of): Arp-scan Netdiscover Nmap ping sweep scan aka ICMP packet reception scan My Go-to is Netdiscover:" /><link rel="canonical" href="/posts/TenderFoot/" /><meta property="og:url" content="/posts/TenderFoot/" /><meta property="og:site_name" content="Rami3l" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2022-05-01T00:00:00+01:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="TenderFoot:1 Writeup" /><meta name="twitter:site" content="@twitter_username" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-05-02T17:22:09+01:00","datePublished":"2022-05-01T00:00:00+01:00","description":"Preface Hey there! This is my writeup for the Vulnhub machine TenderFoot, Its described by it’s author as “A very Easy Box for beginners”, and is recommended for folks new to Vulnhub like myself. The task is simple, grab all 3 flags (user1.txt, user2.txt, proof.txt). Live Host Discovery This could essentially be done in 3 ways(that I know of): Arp-scan Netdiscover Nmap ping sweep scan aka ICMP packet reception scan My Go-to is Netdiscover:","headline":"TenderFoot:1 Writeup","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/TenderFoot/"},"url":"/posts/TenderFoot/"}</script><title>TenderFoot:1 Writeup | Rami3l</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="Rami3l"><meta name="application-name" content="Rami3l"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script><body data-spy="scroll" data-target="#toc" data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" class="mx-auto"> <img src="/assets/avi.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Rami3l</a></div><div class="site-subtitle font-italic">The only true wisdom is in knowing you know nothing.</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <a href="https://github.com/Rami3ll" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/twitter_username" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['anonRamiel','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper"><div id="topbar" class="container d-flex align-items-center justify-content-between h-100 pl-3 pr-3 pl-md-4 pr-md-4"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>TenderFoot:1 Writeup</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper" class="d-flex justify-content-center"><div id="main" class="container pl-xl-4 pr-xl-4"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-9 pr-xl-4"><div class="post pl-1 pr-1 pl-md-2 pr-md-2"><h1 data-toc-skip>TenderFoot:1 Writeup</h1><div class="post-meta text-muted"> <span> Posted <em class="" data-ts="1651359600" data-df="ll" data-toggle="tooltip" data-placement="bottom"> May 1, 2022 </em> </span> <span> Updated <em class="" data-ts="1651508529" data-df="ll" data-toggle="tooltip" data-placement="bottom"> May 2, 2022 </em> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://twitter.com/username">Johnson Daniel Olamide</a> </em> </span><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="1324 words"> <em>7 min</em> read</span></div></div></div><div class="post-content"><h2 id="preface"><span class="mr-2">Preface</span><a href="#preface" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>Hey there! This is my writeup for the Vulnhub machine <a href="https://www.vulnhub.com/entry/tenderfoot-1,581/">TenderFoot</a>, Its described by it’s author as “A very Easy Box for beginners”, and is recommended for folks new to Vulnhub like myself. The task is simple, grab all 3 flags (user1.txt, user2.txt, proof.txt).</p><h3 id="live-host-discovery"><span class="mr-2">Live Host Discovery</span><a href="#live-host-discovery" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>This could essentially be done in 3 ways(that I know of):</p><ul><li>Arp-scan<li>Netdiscover<li>Nmap ping sweep scan aka ICMP packet reception scan My Go-to is Netdiscover:</ul><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>sudo netdiscover -i wlan0 -r 192.168.x.x/24
+</pre></table></code></div></div><ul><li>sudo because netdicover requires root permission to inject &amp; sniff packets across a local network<li>The netdiscover command utility<li>-i to scan a selected interface<li>-r to scan a specified range of subnet (Defaults take forever!)</ul><h3 id="port-scan"><span class="mr-2">Port Scan</span><a href="#port-scan" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>To discover an attack surface:</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+</pre><td class="rouge-code"><pre>┌──(azazel㉿azazel)-[~/Vulnhub/TenderFoot]
+└─$ sudo nmap -sV -sC -sS  192.168.0.141 -Pn -p- --min-rate 2000 -vv                                            
+Starting Nmap 7.92 ( https://nmap.org ) at 2022-05-02 04:17 WAT
+NSE: Loaded 155 scripts for scanning.
+NSE: Script Pre-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 04:17
+Completed NSE at 04:17, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 04:17
+Completed NSE at 04:17, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 04:17
+Completed NSE at 04:17, 0.00s elapsed
+Initiating ARP Ping Scan at 04:17
+Scanning 192.168.43.33 [1 port]
+Completed ARP Ping Scan at 04:17, 0.08s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 04:17
+Completed Parallel DNS resolution of 1 host. at 04:18, 13.00s elapsed
+Initiating SYN Stealth Scan at 04:18
+Scanning 192.168.43.33 [65535 ports]
+Discovered open port 22/tcp on 192.168.43.33
+Discovered open port 80/tcp on 192.168.43.33
+Completed SYN Stealth Scan at 04:18, 1.36s elapsed (65535 total ports)
+Initiating Service scan at 04:18
+Scanning 2 services on 192.168.43.33
+Completed Service scan at 04:18, 6.02s elapsed (2 services on 1 host)
+NSE: Script scanning 192.168.43.33.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 04:18
+Completed NSE at 04:18, 0.11s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 04:18
+Completed NSE at 04:18, 0.01s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 04:18
+Completed NSE at 04:18, 0.00s elapsed
+Nmap scan report for 192.168.43.33
+Host is up, received arp-response (0.00034s latency).
+Scanned at 2022-05-02 04:18:11 WAT for 8s
+Not shown: 65533 closed tcp ports (reset)
+PORT   STATE SERVICE REASON         VERSION
+22/tcp open  ssh     syn-ack ttl 64 OpenSSH 7.2p2 Ubuntu 4ubuntu2.10 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 a2:b7:2d:95:e1:06:7f:a3:f1:8e:bc:5b:4c:29:19:61 (RSA)
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDBVksY9N/ofJe604i4zM4st08JHma+9EE1bag9Iq5aSms9Hte+K8TwHxuq/n62PXSHUV0gJi//1ijo+xBBOt1OLOtEnyGZjtNeBfUqiFjXqgB4dhZk1kMRHYvuHr2zIDlMjOGKol7XXWqNtUsGaGsXWwyh7vH37nhKthZQT8VHodrM9IniaAkKA2xneI9z5AGPQVc09edoAHDa8EnzJFZPwQCkyBP+WKEYS1kAoyTwoIy2JSbRZny7/vlV1oD+r1arS2oD+YJ6cVlFk+fM7Rln2eKp4vZmdcWJte508WERZ5t1rp7ntRO3GlQ5Ed0umpQODLEbK0ptiPkOtR6kh0v7
+|   256 42:0c:c9:6d:1d:e9:84:19:6a:8a:d5:51:2c:69:c6:98 (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBipQCFF4Aerg0pRwZ9y+le1WRmZlvYG+gfpOcrbDzOkTYzrXzWoyCdH9D7CX0LBioHqa5PB1xybTmVzwCgecgA=
+|   256 14:4d:74:42:78:67:9b:f3:dd:00:40:24:4d:12:c9:de (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1227M7ks61pC0yFPWcqzN/62PAaQa9zbEvLDWU7yLq
+80/tcp open  http    syn-ack ttl 64 Apache httpd 2.4.18 ((Ubuntu))
+|_http-title: Apache2 Ubuntu Default Page: It works
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+MAC Address: 08:00:27:46:83:29 (Oracle VirtualBox virtual NIC)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+NSE: Script Post-scanning.
+NSE: Starting runlevel 1 (of 3) scan.
+Initiating NSE at 04:18
+Completed NSE at 04:18, 0.00s elapsed
+NSE: Starting runlevel 2 (of 3) scan.
+Initiating NSE at 04:18
+Completed NSE at 04:18, 0.00s elapsed
+NSE: Starting runlevel 3 (of 3) scan.
+Initiating NSE at 04:18
+Completed NSE at 04:18, 0.00s elapsed
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 21.15 seconds
+           Raw packets sent: 65536 (2.884MB) | Rcvd: 65542 (2.622MB)
+</pre></table></code></div></div><p>We got http and ssh, cool On http, its just default landing page we meet, <img data-src="/assets/img/posts/vulnhub/TenderFoot/landing.png" alt="image" data-proofer-ignore></p><p>checking the source code, at the bottom</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>&lt;!--
+G00D! 
+check /robots.txt directory.
+--&gt;
+
+</pre></table></code></div></div><p>we got a hint to check the robots.txt::</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>
+Here is a directory open it 
+
+/hint
+
+</pre></table></code></div></div><p>Okay a clue to a hidden directory let’s see where this leads, On first sight it seems blank but on viewing the source, hidden at the extreme bottom is an encoded text screaming base32(Can be identified with all upper casing characters and paddings(==)although paddings are not always present)::</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>&lt;!--
+EBPV6X27L5PV6X27L5PV6X27L5PV6X27L4FHYICOGB2GQ2LOM4QEQZLSMUQSAIBAEAQCA7AKPQQFI4TZEBZW63LFORUGS3THEBSWY43FEF6AUIBNFUWS2LJNFUWS2LJNFUWS2LJNFUWS2LIKIVXHK3LFOJQXIZJANVXXEZJAHIUQ====
+
+Decrypt it!
+--&gt;
+</pre></table></code></div></div><p>On decoding it says: <img data-src="/assets/img/posts/vulnhub/TenderFoot/deadend1.png" alt="image" data-proofer-ignore></p><p>welp that’s sad, moving on, I decide to do a directory enumeration, after trying out around 5 wordlists</p><p>I finally get a hit with seclists:: <img data-src="/assets/img/posts/vulnhub/TenderFoot/dirsearch.png" alt="image" data-proofer-ignore></p><p>We know /hint is a deadend let’s visit /fotocd</p><p><img data-src="/assets/img/posts/vulnhub/TenderFoot/brainfuck.png" alt="image" data-proofer-ignore></p><p>lesserthan, greaterthan, full stops, straight brackets, addition signs, and what not, no doubt its the esoteric brainfuck:: We could decode with either <a href="https://copy.sh/brainfuck/">this interperter</a> or <a href="https://www.dcode.fr/brainfuck-language">decode.fr</a> <img data-src="/assets/img/posts/vulnhub/TenderFoot/brainfuck-decode.png" alt="image" data-proofer-ignore></p><p>Awesome, we have a better clue, a base64 encoded header and a hint that we would need to look for a username: On decoding the header we get::</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>┌──(azazel㉿azazel)-[~/Vulnhub/TenderFoot]
+└─$ echo -n JDk5OTkwJA== | base64 -d
+
+$99990$  
+</pre></table></code></div></div><p>We have what seems to be a password, to find complete creds of a user, we could either do a password spray with hydra to find a username OR enumerate once again. Due to hydra time constraints and limited threads on ssh bruteforcing, I enumerated again, except this time with extensions(I did leave hydra to bruteforce in the background:)):</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>dirsearch -u http://192.168.0.141/ -w  /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-big.txt -t 250 -e js,php,txt,xml 
+</pre></table></code></div></div><p>we get the entry.js has a user, “monica”</p><p><img data-src="/assets/img/posts/vulnhub/TenderFoot/username.png" alt="image" data-proofer-ignore></p><p>Lets login on ssh with her creds! monica:$99990$</p><h3 id="initial-access"><span class="mr-2">Initial Access</span><a href="#initial-access" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p><img data-src="/assets/img/posts/vulnhub/TenderFoot/access1.png" alt="image" data-proofer-ignore></p><p>And we’re in! Lets play around 😈 Here’s our first flag! Next we have this Joey directory with a whole bunch of other subdirectories :) just tab autocomplete your way to the relevant file <img data-src="/assets/img/posts/vulnhub/TenderFoot/access2.png" alt="image" data-proofer-ignore></p><p>We have a new clue, the fotocd subdirectory::</p><p><img data-src="/assets/img/posts/vulnhub/TenderFoot/parent-dir.png" alt="image" data-proofer-ignore></p><p>We have access to the parent directory of the site and have a zip protected file and a note.txt file waiting for us, just grab those and check them out: First the note.txt::</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>Here is a zip file for you, unzip it !
+
+"#9175"
+
+</pre></table></code></div></div><p>A password to our zip? this is almost too easy. Unzipping our file, we have the Joey.zip file containing another zip protected file and a note.txt, *sigh</p><p>The note file says:</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre>┌──(azazel㉿azazel)-[~/Vulnhub/TenderFoot]
+└─$ cat note.txt
+=======================================================
+=======================================================
+Not this time DUDE!
+
+Just G00GLE and learn how to crack zip passwords :)
+
+you will learn new thing!
+=======================================================
+=======================================================
+</pre></table></code></div></div><p>Touche:: crack the gift.zip file and we got this: <img data-src="/assets/img/posts/vulnhub/TenderFoot/crack.png" alt="image" data-proofer-ignore></p><p>Just a clue for us to find SUID binaries, of course we would have done that if he didn’t lead us on😂 Checking for SUID binaries, I spotted an odd binary, on executing it, we became another user, Awesome Cop the user2.txt flag. <img data-src="/assets/img/posts/vulnhub/TenderFoot/chandler.png" alt="image" data-proofer-ignore></p><p>Now to gain elevated privileges,</p><blockquote><p>if there’s anything this box taught me is always try to get user creds to login properly over a pty cause sometimes the SUID Biniaries set for that user might not really display as they should.</p></blockquote><p>Luckily for us we have a new clue, a base32 encoded charset::</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>┌──(azazel㉿azazel)-[~/Vulnhub/TenderFoot]
+└─$ echo -n OBQXG43XMQ5FSMDVINZDIY3LJUZQ==== | base32 -d
+
+passwd:Y0uCr4ckM3        
+</pre></table></code></div></div><p>Cool this might just be chandlers creds. lets try logging in</p><h3 id="root-tooth"><span class="mr-2">Root tooth</span><a href="#root-tooth" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Even without <a href="https://gtfobins.github.io/gtfobins/ftp/#sudo">GTFOBins</a> enabling sudo on ftp is a clean shot to get root. <img data-src="/assets/img/posts/vulnhub/TenderFoot/root.png" alt="image" data-proofer-ignore></p><p>And that’s it, fully compromised!</p><p>Due to the emergence of findings of newer vulnerabilities and evolving tech, there are so many ways to get root instantly on this machine, one of which is Pwnkit(CVE-2021-4034)which allows us abuse pkexec by virtue of SUID bit set on the binary, nonetheless those are all unintended ways and not ideal.:)</p><blockquote><p>The difference between a hacker and a Noob, is that a hacker has failed more times than a Noob has ever tried.</p></blockquote><p>Thanks for the read.</p><p>From Rami3l with &lt;3.</p><p>Salaam.</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/vulnhub/'>Vulnhub</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/enumeration/" class="post-tag no-text-decoration" >Enumeration</a> <a href="/tags/esoteric-languages/" class="post-tag no-text-decoration" >Esoteric Languages</a> <a href="/tags/brainfuck/" class="post-tag no-text-decoration" >Brainfuck</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=TenderFoot%3A1+Writeup+-+Rami3l&url=%2Fposts%2FTenderFoot%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=TenderFoot%3A1+Writeup+-+Rami3l&u=%2Fposts%2FTenderFoot%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=%2Fposts%2FTenderFoot%2F&text=TenderFoot%3A1+Writeup+-+Rami3l" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">Recently Updated</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/Paper-writeup/">Paper writeup</a><li><a href="/posts/Deathnote/">Deathnote Writeup</a><li><a href="/posts/NahamConCTF/">NahamCon 2022 CTF - challenge walkthrough</a><li><a href="/posts/TenderFoot/">TenderFoot:1 Writeup</a><li><a href="/posts/BoilerCTF-Writeup/">BoilerCTF Walkthrough</a></ul></div><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/command-injection/">Command Injection</a> <a class="post-tag" href="/tags/enumeration/">Enumeration</a> <a class="post-tag" href="/tags/brainfuck/">Brainfuck</a> <a class="post-tag" href="/tags/bruteforce/">Bruteforce</a> <a class="post-tag" href="/tags/cms/">CMS</a> <a class="post-tag" href="/tags/ctfs/">ctfs</a> <a class="post-tag" href="/tags/cve/">CVE</a> <a class="post-tag" href="/tags/directory-enumeration/">Directory Enumeration</a> <a class="post-tag" href="/tags/dirsearch/">Dirsearch</a> <a class="post-tag" href="/tags/esoteric-languages/">Esoteric Languages</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">Contents</div><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 pl-3 pr-3 pr-xl-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/BoilerCTF-Writeup/"><div class="card-body"> <em class="small" data-ts="1650322800" data-df="ll" > Apr 19, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>BoilerCTF Walkthrough</h3><div class="text-muted small"><p> Preface Hey there! have to say this was frustratingly fun lol, filled with so many dead ends too. You could check it out here Tryhackme, I’ll walk you through buddy! Hints Recursive enumeration...</p></div></div></a></div><div class="card"> <a href="/posts/Deathnote/"><div class="card-body"> <em class="small" data-ts="1651532400" data-df="ll" > May 3, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Deathnote Writeup</h3><div class="text-muted small"><p> Preface Hi! this is a walkthrough of the Vulnhub machine Deathnote,One of my favourite anime’s of all time and described by the author as a Straight forward box, ranked Level - easy with a very he...</p></div></div></a></div><div class="card"> <a href="/posts/Paper-writeup/"><div class="card-body"> <em class="small" data-ts="1654038000" data-df="ll" > Jun 1, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Paper writeup</h3><div class="text-muted small"><p> Premise Hey, this is my writeup for the Hackthebox machine; paper, my first HTB non starting point machine and took me a day to finish mostly due to bad internet lmao. Enumeration As always, lets ...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/NahamConCTF/" class="btn btn-outline-primary" prompt="Older"><p>NahamCon 2022 CTF - challenge walkthrough</p></a> <a href="/posts/Deathnote/" class="btn btn-outline-primary" prompt="Newer"><p>Deathnote Writeup</p></a></div></div></div><footer class="row pl-3 pr-3"><div class="col-12 d-flex justify-content-between align-items-center text-muted pl-0 pr-0"><div class="footer-left"><p class="mb-0"> © 2022 <a href="https://twitter.com/username">Johnson Daniel Olamide</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/command-injection/">Command Injection</a> <a class="post-tag" href="/tags/enumeration/">Enumeration</a> <a class="post-tag" href="/tags/brainfuck/">Brainfuck</a> <a class="post-tag" href="/tags/bruteforce/">Bruteforce</a> <a class="post-tag" href="/tags/cms/">CMS</a> <a class="post-tag" href="/tags/ctfs/">ctfs</a> <a class="post-tag" href="/tags/cve/">CVE</a> <a class="post-tag" href="/tags/directory-enumeration/">Directory Enumeration</a> <a class="post-tag" href="/tags/dirsearch/">Dirsearch</a> <a class="post-tag" href="/tags/esoteric-languages/">Esoteric Languages</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a><div id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-animation="true" data-autohide="false"><div class="toast-header"> <button type="button" class="ml-2 ml-auto close" data-dismiss="toast" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div><div class="toast-body text-center pt-0"><p class="pl-2 pr-2 mb-3"></p><button type="button" class="btn btn-primary" aria-label="Update"> </button></div></div><script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/en.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/app.js"></script>
